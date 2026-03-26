@@ -7,18 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace TPFinalNivel3BuccieroMiguel
 {
-    public partial class MasterPage : System.Web.UI.MasterPage
+    public partial class Favoritos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            string busqueda = txtBuscar.Text;
-
-            Response.Redirect("Default.aspx?buscar=" + busqueda);
         }
     }
 }

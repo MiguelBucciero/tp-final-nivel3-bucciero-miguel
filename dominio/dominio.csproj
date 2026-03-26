@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="Articulo.cs" />
     <Compile Include="Categorias.cs" />
+    <Compile Include="Favoritos.cs" />
     <Compile Include="Marca.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

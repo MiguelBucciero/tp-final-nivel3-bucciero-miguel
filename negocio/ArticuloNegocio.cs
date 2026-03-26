@@ -14,12 +14,12 @@ namespace negocio
     public class ArticuloNegocio
     {
         AccesoDatos datos = new AccesoDatos();
-        public List<Articulo> listarDgv()
+        public List<Articulo> listarArticulos()
         {
             List<Articulo> lista = new List<Articulo>();
             try
             {
-                datos.setearConsulta("Select Id, Nombre, Descripcion, ImagenUrl , Precio From ARTICULOS");
+                datos.setearConsulta("SELECT A.Id, A.Nombre, A.Descripcion, A.ImagenUrl, A.Precio, A.IdCategoria, M.Id AS IdMarca, M.Descripcion AS Marca FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -30,7 +30,12 @@ namespace negocio
                     if (!(datos.Lector["ImagenUrl"] is DBNull))
                         aux.Imagen = (string)datos.Lector["ImagenUrl"];
                     aux.Precio = (Decimal)datos.Lector["Precio"];
-                  
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+
                     lista.Add(aux);
                 }
                 return lista;
@@ -70,6 +75,39 @@ namespace negocio
                     lista.Add(aux);
                 }
                 return lista;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public Articulo cargarArticulo(Articulo nuevo)
+        {
+            try
+            {
+                datos.setearConsulta("Select A.Id Id, Codigo, Nombre, A.Descripcion Descripcion, ImagenUrl, Precio , M.Descripcion Marca, C.Descripcion Categoria From ARTICULOS A, MARCAS M, CATEGORIAS C where A.IdMarca = M.Id AND A.IdCategoria = C.id AND A.Id = @Id");
+                datos.setearParametro("Id", nuevo.Id);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    nuevo.Id = (int)datos.Lector["Id"];
+                    nuevo.CodigoArticulo = (string)datos.Lector["Codigo"];
+                    nuevo.Nombre = (string)datos.Lector["Nombre"];
+                    nuevo.Descripcion = (string)datos.Lector["Descripcion"];
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        nuevo.Imagen = (string)datos.Lector["ImagenUrl"];
+                    nuevo.Precio = (Decimal)datos.Lector["Precio"];
+                    nuevo.Categoria = new Categoria();
+                    nuevo.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    nuevo.Marca = new Marca();
+                    nuevo.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    return nuevo;
+                }
+                return null;
             }
             catch (Exception ex)
             {

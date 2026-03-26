@@ -1,6 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TPFinalNivel3BuccieroMiguel.Login" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .btn-ingresar {
+            margin-top: auto;
+            border: 2px solid #ff6600 !important;
+            color: #ff6600 !important;
+            background-color: transparent !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ingresar:hover {
+            background-color: #ff6600 !important;
+            color: #fff !important;
+        }
+
+        .btn-ingresar:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+        }
+
+        .btn-ingresar:active {
+            transform: scale(0.98);
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="d-flex justify-content-center align-items-start vh-100">
@@ -16,7 +38,7 @@
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" />
                 </div>
                 <div class="d-grid gap-2 mb-3">
-                    <asp:Button Text="Ingresar" CssClass="btn btn-primary" ID="btnLogin" runat="server" />
+                    <asp:Button Text="Ingresar" CssClass="btn btn-ingresar" ID="btnLogin" runat="server" />
                 </div>
                 <div class="text-center">
                     <a href="Registrar.aspx">Crear cuenta</a>
