@@ -238,57 +238,33 @@ namespace negocio
             }
         }
         
-        public List<Articulo> filtrar(string campo, string criterio, string filtro)
+        public List<Articulo> filtrar(int marca, int categoria, decimal precioMax, decimal precioMin)
         {
             List<Articulo> lista = new List<Articulo>();
             try
             {
-                string consulta = (" Select A.Id, Codigo, Nombre, A.Descripcion, Precio, ImagenUrl, C.Descripcion ,C.Id, M.Descripcion,M.Id Marca From ARTICULOS A, CATEGORIAS C, MARCAS M Where  C.Id = A.IdCategoria AND M.Id = A.IdMarca AND ");
-                if (campo == "Número")
+                string consulta = @" SELECT A.Id, Codigo, Nombre, A.Descripcion, Precio, ImagenUrl, C.Descripcion AS Categoria, C.Id, M.Descripcion AS Marca, M.Id AS IdMarca FROM ARTICULOS A INNER JOIN CATEGORIAS C ON C.Id = A.IdCategoria INNER JOIN MARCAS M ON M.Id = A.IdMarca WHERE 1=1";
+                if (marca != 0)
                 {
-                    switch (criterio)
-                    {
-                        case "Mayor a":
-                            consulta += "A.Id > " + filtro;
-                            break;
-                        case "Menor a":
-                            consulta += "A.Id < " + filtro;
-                            break;
-                        default:
-                            consulta += "A.Id = " + filtro;
-                            break;
-                    }
+                    consulta += " AND M.Id = " + marca;
                 }
-                else if (campo == "Nombre")
+                if (categoria != 0)
                 {
-                    switch (criterio)
-                    {
-                        case "Comienza con":
-                            consulta += "Nombre like '" + filtro + "%'";
-                            break;
-                        case "Termina con":
-                            consulta += "Nombre like '% " + filtro + "'";
-                            break;
-                        default:
-                            consulta += "Nombre like '%" + filtro + "%'";
-                            break;
-                    }
+                    consulta += " AND C.Id = " + categoria;
                 }
-                else
+                if (precioMin != 0 && precioMax != 0)
                 {
-                    switch (criterio)
-                    {
-                        case "Mayor a":
-                            consulta += "Precio > " + filtro;
-                            break;
-                        case "Menor a":
-                            consulta += "Precio < " + filtro;
-                            break;
-                        default:
-                            consulta += "Precio = " + filtro;
-                            break;
-                    }
+                    consulta += " AND Precio BETWEEN " + precioMin + " AND " + precioMax;
                 }
+                else if (precioMin != 0)
+                {
+                    consulta += " AND Precio >= " + precioMin;
+                }
+                else if (precioMax != 0)
+                {
+                    consulta += " AND Precio <= " + precioMax;
+                }
+
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())

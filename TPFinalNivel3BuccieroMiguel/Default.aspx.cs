@@ -13,13 +13,11 @@ namespace TPFinalNivel3BuccieroMiguel
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             if (!IsPostBack)
             {
                 cargarArticulos();
                 cargarFiltros();
             }
-            
         }
 
         private void cargarArticulos()
@@ -36,7 +34,6 @@ namespace TPFinalNivel3BuccieroMiguel
                 {
                     ArticuloNegocio negocio = new ArticuloNegocio();
                     listaArticulo = negocio.listarArticulos();
-
                     Session.Add("listaArticulo", listaArticulo);
                 }
 
@@ -44,7 +41,6 @@ namespace TPFinalNivel3BuccieroMiguel
                 if (Request.QueryString["categoria"] != null)
                 {
                     int categoria = int.Parse(Request.QueryString["categoria"]);
-
                     listaArticulo = listaArticulo
                         .Where(x => x.Categoria != null && x.Categoria.Id == categoria)
                         .ToList();
@@ -54,7 +50,6 @@ namespace TPFinalNivel3BuccieroMiguel
                 if (Request.QueryString["buscar"] != null)
                 {
                     string texto = Request.QueryString["buscar"].ToLower();
-
                     listaArticulo = listaArticulo.Where(x =>
                         x.Nombre.ToLower().Contains(texto) ||
                         (x.Marca != null && x.Marca.Descripcion.ToLower().Contains(texto))
@@ -65,7 +60,6 @@ namespace TPFinalNivel3BuccieroMiguel
                 if (Request.QueryString["orden"] != null)
                 {
                     string orden = Request.QueryString["orden"];
-
                     if (orden == "precio_desc")
                         listaArticulo = listaArticulo.OrderByDescending(x => x.Precio).ToList();
                     else if (orden == "precio_asc")
@@ -91,21 +85,22 @@ namespace TPFinalNivel3BuccieroMiguel
                 List<Marca> listaMarca = marcaNegocio.listar();
 
                 // MARCAS
-                var marcas = listaMarca.Select(x => x.Descripcion).Distinct().ToList();
-                chkMarca.DataSource = marcas;
-                chkMarca.DataBind();
+                rbMarca.DataSource = listaMarca;
+                rbMarca.DataTextField = "Descripcion";
+                rbMarca.DataValueField = "Id";
+                rbMarca.DataBind();
 
                 // CATEGORIAS
-                var categorias = listaCategoria.Select(x => x.Descripcion).Distinct().ToList();
-                chkCategoria.DataSource = categorias;
-                chkCategoria.DataBind();
+                rbCategoria.DataSource = listaCategoria;
+                rbCategoria.DataTextField = "Descripcion";
+                rbCategoria.DataValueField = "Id";
+                rbCategoria.DataBind();
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
-            
         }
 
         protected void lnkImagen_Click(object sender, EventArgs e)
@@ -123,7 +118,40 @@ namespace TPFinalNivel3BuccieroMiguel
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
-            //lo desarrollo luego esta parte
+            try
+            {
+                int marca = 0;
+                int categoria = 0;
+                decimal precioMin = 0;
+                decimal precioMax = 0;
+
+                if (!string.IsNullOrEmpty(rbMarca.SelectedValue))
+                    marca = int.Parse(rbMarca.SelectedValue);
+
+                if (!string.IsNullOrEmpty(rbCategoria.SelectedValue))
+                    categoria = int.Parse(rbCategoria.SelectedValue);
+                precioMin = string.IsNullOrEmpty(txtPrecioMin.Text) ? 0 : decimal.Parse(txtPrecioMin.Text);
+                precioMax = string.IsNullOrEmpty(txtPrecioMax.Text) ? 0 : decimal.Parse(txtPrecioMax.Text);
+
+                ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+                List<Articulo> listaArticulo = articuloNegocio.filtrar(marca, categoria, precioMax, precioMin);
+                repRepetidor.DataSource = listaArticulo;
+                repRepetidor.DataBind();
+                
+                limpiarFiltros();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+        }
+        protected void limpiarFiltros()
+        {
+            txtPrecioMax.Text = "";
+            txtPrecioMin.Text = "";
+            rbCategoria.ClearSelection();
+            rbMarca.ClearSelection();
         }
     }
 }
