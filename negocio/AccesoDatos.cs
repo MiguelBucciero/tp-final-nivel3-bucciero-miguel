@@ -42,13 +42,15 @@ namespace negocio
                 throw ex;
             }
         }
-        public void ejecutarAccion()
+        public int ejecutarAccion()
         {
             comando.Connection = conexion;
+            int filasAfectadas = 0;
             try
             {
                 conexion.Open();
-                comando.ExecuteNonQuery();
+                filasAfectadas = comando.ExecuteNonQuery();
+                return filasAfectadas;
             }
             catch (Exception ex)
             {

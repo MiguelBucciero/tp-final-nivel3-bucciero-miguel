@@ -41,9 +41,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 if (Request.QueryString["categoria"] != null)
                 {
                     int categoria = int.Parse(Request.QueryString["categoria"]);
-                    listaArticulo = listaArticulo
-                        .Where(x => x.Categoria != null && x.Categoria.Id == categoria)
-                        .ToList();
+                    listaArticulo = listaArticulo.Where(x => x.Categoria != null && x.Categoria.Id == categoria).ToList();
                 }
 
                 // BUSQUEDA

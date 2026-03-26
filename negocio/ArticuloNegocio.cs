@@ -19,7 +19,7 @@ namespace negocio
             List<Articulo> lista = new List<Articulo>();
             try
             {
-                datos.setearConsulta("SELECT A.Id, A.Nombre, A.Descripcion, A.ImagenUrl, A.Precio, A.IdCategoria, M.Id AS IdMarca, M.Descripcion AS Marca FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id");
+                datos.setearConsulta("SELECT A.Id, A.Nombre, A.Descripcion, A.ImagenUrl, A.Precio, A.IdCategoria, C.Descripcion AS Categoria, M.Id AS IdMarca, M.Descripcion AS Marca FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS C ON A.IdCategoria=C.Id");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -32,6 +32,7 @@ namespace negocio
                     aux.Precio = (Decimal)datos.Lector["Precio"];
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
                     aux.Marca = new Marca();
                     aux.Marca.Id = (int)datos.Lector["IdMarca"];
                     aux.Marca.Descripcion = (string)datos.Lector["Marca"];
@@ -49,12 +50,11 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public List<Articulo> listarDetalle(Articulo nuevo)
+        public Articulo cargarArticulo(Articulo nuevo)
         {
-            List<Articulo> lista = new List<Articulo>();
             try
             {
-                datos.setearConsulta("Select A.Id Id, Codigo, Nombre, A.Descripcion Descripcion, ImagenUrl, Precio , M.Descripcion Marca, C.Descripcion Categoria From ARTICULOS A, MARCAS M, CATEGORIAS C where A.IdMarca = M.Id AND A.IdCategoria = C.id AND A.Id = @Id");
+                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.ImagenUrl, A.Precio, A.IdCategoria, C.Descripcion AS Categoria, M.Id AS IdMarca, M.Descripcion AS Marca FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS C ON A.IdCategoria=C.Id where A.Id=@Id");
                 datos.setearParametro("Id",nuevo.Id );
                 datos.ejecutarLectura();
                 
@@ -69,12 +69,13 @@ namespace negocio
                         aux.Imagen = (string)datos.Lector["ImagenUrl"];
                     aux.Precio = (Decimal)datos.Lector["Precio"];
                     aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
                     aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
                     aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
                     aux.Marca.Descripcion = (string)datos.Lector["Marca"];
-                    lista.Add(aux);
                 }
-                return lista;
+                return aux;
             }
             catch (Exception ex)
             {
@@ -85,39 +86,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public Articulo cargarArticulo(Articulo nuevo)
-        {
-            try
-            {
-                datos.setearConsulta("Select A.Id Id, Codigo, Nombre, A.Descripcion Descripcion, ImagenUrl, Precio , M.Descripcion Marca, C.Descripcion Categoria From ARTICULOS A, MARCAS M, CATEGORIAS C where A.IdMarca = M.Id AND A.IdCategoria = C.id AND A.Id = @Id");
-                datos.setearParametro("Id", nuevo.Id);
-                datos.ejecutarLectura();
-                if (datos.Lector.Read())
-                {
-                    nuevo.Id = (int)datos.Lector["Id"];
-                    nuevo.CodigoArticulo = (string)datos.Lector["Codigo"];
-                    nuevo.Nombre = (string)datos.Lector["Nombre"];
-                    nuevo.Descripcion = (string)datos.Lector["Descripcion"];
-                    if (!(datos.Lector["ImagenUrl"] is DBNull))
-                        nuevo.Imagen = (string)datos.Lector["ImagenUrl"];
-                    nuevo.Precio = (Decimal)datos.Lector["Precio"];
-                    nuevo.Categoria = new Categoria();
-                    nuevo.Categoria.Descripcion = (string)datos.Lector["Categoria"];
-                    nuevo.Marca = new Marca();
-                    nuevo.Marca.Descripcion = (string)datos.Lector["Marca"];
-                    return nuevo;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+      
         public Articulo listarArticuloModificar(Articulo nuevo) 
         {
             try
@@ -154,10 +123,11 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void agregar(Articulo nuevo)
+        public int agregar(Articulo nuevo)
         {
             try
             {
+
                 datos.setearConsulta("INSERT INTO ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) VALUES (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
                 datos.setearParametro("@Codigo", nuevo.CodigoArticulo);
                 datos.setearParametro("@Nombre", nuevo.Nombre);
@@ -166,7 +136,8 @@ namespace negocio
                 datos.setearParametro("@IdCategoria", nuevo.Categoria.Id);
                 datos.setearParametro("@ImagenUrl", nuevo.Imagen);
                 datos.setearParametro("@Precio", nuevo.Precio);
-                datos.ejecutarAccion();
+                
+                return datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
@@ -177,7 +148,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void modificar(Articulo nuevo)
+        public int modificar(Articulo nuevo)
         {
             try
             {
@@ -190,7 +161,7 @@ namespace negocio
                 datos.setearParametro("@ImagenUrl", nuevo.Imagen);
                 datos.setearParametro("@Precio", nuevo.Precio);
                 datos.setearParametro("@Id", nuevo.Id);
-                datos.ejecutarAccion();
+                return datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
@@ -201,13 +172,13 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void eliminar(int id)
+        public int eliminar(int id)
         {
             try
             {
                 datos.setearConsulta("DELETE FROM ARTICULOS WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
-                datos.ejecutarAccion();
+                return datos.ejecutarAccion(); 
             }
             catch (Exception ex)
             {
