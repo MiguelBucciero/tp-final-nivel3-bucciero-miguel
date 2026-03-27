@@ -22,6 +22,27 @@
                 transform: scale(0.98);
             }
 
+        .btn-cancelar {
+            margin-top: auto;
+            border: 2px solid #ff6600 !important;
+            color: #ff6600 !important;
+            background-color: #333 !important;
+            transition: all 0.3s ease;
+        }
+
+            .btn-cancelar:hover {
+                background-color: #ff6600 !important;
+                color: #fff !important;
+            }
+
+            .btn-cancelar:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+            }
+
+            .btn-cancelar:active {
+                transform: scale(0.98);
+            }
+
         .form-control:focus {
             border-color: #ff6600 !important;
             box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25) !important;
@@ -82,7 +103,7 @@
                             <div class="mb-3">
                                 <label class="form-label">URL Imagen</label>
                                 <asp:TextBox ID="txtImagen" runat="server" CssClass="form-control" />
-                                <img id="imgPreview" class="img-fluid mt-2" style="max-height:150px;" />
+                                <img id="imgPreview" class="img-fluid mt-2" style="max-height: 150px;" />
                             </div>
 
                             <div class="mb-3">
@@ -96,7 +117,7 @@
                     <!-- BOTONES -->
                     <div class="d-flex justify-content-center gap-3 mt-4">
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-agregar" OnClick="btnGuardar_Click" />
-                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" PostBackUrl="ListadoArticulos.aspx" />
+                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-cancelar" PostBackUrl="ListadoArticulos.aspx" />
                     </div>
 
                     <asp:Label ID="lblMensaje" runat="server" CssClass="mt-3 d-block text-center fw-bold"></asp:Label>
@@ -107,8 +128,8 @@
         </div>
     </div>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const txtImagen = document.getElementById("<%= txtImagen.ClientID %>");
+        document.addEventListener("DOMContentLoaded", function () {
+            const txtImagen = document.getElementById("<%= txtImagen.ClientID %>");
         const imgPreview = document.getElementById("imgPreview");
 
         function actualizarImagen() {

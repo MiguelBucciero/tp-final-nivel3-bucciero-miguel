@@ -29,14 +29,14 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .navbar-bottom .nav-link {
-            color: #333;
-            font-weight: 500 !important;
-        }
+            .navbar-bottom .nav-link {
+                color: #333;
+                font-weight: 500 !important;
+            }
 
-        .navbar-bottom .nav-link:hover {
-            color: #ff4500;
-        }
+                .navbar-bottom .nav-link:hover {
+                    color: #ff4500;
+                }
 
         .nav-icons a {
             color: #ff6600 !important;
@@ -45,10 +45,10 @@
             transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        .nav-icons a:hover {
-            transform: scale(1.15);
-            color: #ffffff !important;
-        }
+            .nav-icons a:hover {
+                transform: scale(1.15);
+                color: #ffffff !important;
+            }
 
         .btn-buscar {
             border-color: #ff6600 !important;
@@ -95,14 +95,37 @@
                     </div>
                 </asp:Panel>
 
-                <!-- Iconos de usuario y carrito -->
+                <!-- Iconos de usuario y favoritos y menu admin -->
                 <div class="d-flex align-items-center nav-icons ms-3">
-                    <a href="Login.aspx" class="nav-link text-white d-flex align-items-center">
-                        <i class="bi bi-person me-1"></i>Ingresá
-                    </a>
-                    <a href="#" class="nav-link text-white">
-                        <i class="bi bi-cart3 ms-2"></i>
-                    </a>
+
+                    <!-- LOGIN -->
+                    <asp:Panel ID="pnlLogin" runat="server">
+                        <a href="Login.aspx" class="nav-link text-white d-flex align-items-center">
+                            <i class="bi bi-person me-1"></i> Ingresá
+                        </a>
+                    </asp:Panel>
+                    <!-- LOGOUT -->
+                    <asp:Panel ID="pnlLogout" runat="server" Visible="false">
+                        <asp:LinkButton ID="btnLogout" runat="server" OnClick="btnLogout_Click" CssClass="nav-link text-white d-flex align-items-center">
+                            <i class="bi bi-box-arrow-right me-1"></i> Salir
+                        </asp:LinkButton>
+                    </asp:Panel>
+
+
+                    <!-- FAVORITOS -->
+                    <asp:Panel ID="pnlFavoritosTop" runat="server" Visible="false">
+                        <a href="Favoritos.aspx" class="nav-link text-white">
+                            <i class="bi bi-heart ms-2"> Favoritos</i>
+                        </a>
+                    </asp:Panel>
+
+                    <!-- ADMIN -->
+                    <asp:Panel ID="pnlAdminTop" runat="server" Visible="false">
+                        <a href="LIstadoArticulos.aspx" class="nav-link text-white d-flex align-items-center">
+                            <i class="bi bi-gear ms-2"> Menú Admin</i>
+                        </a>
+                    </asp:Panel>
+
                 </div>
             </div>
         </nav>

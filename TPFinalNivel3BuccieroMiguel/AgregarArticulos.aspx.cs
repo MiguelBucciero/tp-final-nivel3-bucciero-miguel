@@ -13,6 +13,11 @@ namespace TPFinalNivel3BuccieroMiguel
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["EsAdmin"] == null || (bool)Session["EsAdmin"] == false)
+            {
+                Session.Add("error", "No tiene los permisos necesarios para acceder a esta página.");
+                Response.Redirect("Error.aspx");
+            }
             if (!IsPostBack)
             {
                 cargarCombos();

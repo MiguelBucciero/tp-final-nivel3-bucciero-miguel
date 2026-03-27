@@ -14,10 +14,15 @@ namespace TPFinalNivel3BuccieroMiguel
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["EsAdmin"] == null || (bool)Session["EsAdmin"] == false)
+            {
+                Session.Add("error", "No tiene los permisos necesarios para acceder a esta página.");
+                Response.Redirect("Error.aspx");
+            }
             if (!IsPostBack)
             {
                 cargarArticulos();
+                cargarFiltros();
             }
 
         }
@@ -53,6 +58,22 @@ namespace TPFinalNivel3BuccieroMiguel
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }
+        }
+        private void cargarFiltros()
+        {
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            ddlFiltroMarca.DataSource = marcaNegocio.listar();
+            ddlFiltroMarca.DataTextField = "Descripcion";
+            ddlFiltroMarca.DataValueField = "Id";
+            ddlFiltroMarca.DataBind();
+            ddlFiltroMarca.Items.Insert(0, new ListItem("Todas", "0"));
+
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+            ddlFiltroCategoria.DataSource = categoriaNegocio.listar();
+            ddlFiltroCategoria.DataTextField = "Descripcion";
+            ddlFiltroCategoria.DataValueField = "Id";
+            ddlFiltroCategoria.DataBind();
+            ddlFiltroCategoria.Items.Insert(0, new ListItem("Todas", "0"));
         }
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -128,6 +149,37 @@ namespace TPFinalNivel3BuccieroMiguel
         protected void btnCancelarEliminar_Click(object sender, EventArgs e)
         {
             pnlConfirmar.Visible = false;
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+
+            int idMarca = int.Parse(ddlFiltroMarca.SelectedValue);
+            int idCategoria = int.Parse(ddlFiltroCategoria.SelectedValue);
+
+            decimal precioMin = 0;
+            decimal precioMax = 0;
+            precioMin = string.IsNullOrEmpty(txtPrecioMin.Text) ? 0 : decimal.Parse(txtPrecioMin.Text);
+            precioMax = string.IsNullOrEmpty(txtPrecioMax.Text) ? 0 : decimal.Parse(txtPrecioMax.Text);
+
+            List<Articulo> listaArticulo = negocio.filtrar(idMarca, idCategoria, precioMax, precioMin);
+
+            gvListadoArticulos.DataSource = listaArticulo;
+            gvListadoArticulos.DataBind();
+            limpiarFiltros();
+        }
+        protected void limpiarFiltros()
+        {
+            ddlFiltroMarca.SelectedIndex = 0;
+            ddlFiltroCategoria.SelectedIndex = 0;
+            txtPrecioMin.Text = string.Empty;
+            txtPrecioMax.Text = string.Empty;
+        }
+
+        protected void btnMostrarFiltros_Click(object sender, EventArgs e)
+        {
+            pnlFiltros.Visible = !pnlFiltros.Visible;
         }
     }
 }

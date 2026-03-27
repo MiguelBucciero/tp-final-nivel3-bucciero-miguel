@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,26 @@ namespace TPFinalNivel3BuccieroMiguel
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["usuario"] != null)
+            {
+                Usuario user = (Usuario)Session["usuario"];
 
+                pnlLogin.Visible = false;
+                pnlFavoritosTop.Visible = true;
+                pnlLogout.Visible = true;
+
+                if (user.Admin)
+                {
+                    pnlAdminTop.Visible = true;
+                }
+            }
+            else
+            {
+                pnlLogin.Visible = true;
+                pnlLogout.Visible = false;
+                pnlFavoritosTop.Visible = false;
+                pnlAdminTop.Visible = false;
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -20,5 +40,15 @@ namespace TPFinalNivel3BuccieroMiguel
 
             Response.Redirect("Default.aspx?buscar=" + busqueda);
         }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+
+            Response.Redirect("Default.aspx");
+        }
+
+      
     }
 }

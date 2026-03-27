@@ -110,8 +110,33 @@ namespace TPFinalNivel3BuccieroMiguel
 
         protected void agregarFavoritos_Click(object sender, EventArgs e)
         {
-            string id = ((Button)sender).CommandArgument;
-            //lo desarrollo luego esta parte
+            try
+            {
+                if (Session["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                Usuario user = (Usuario)Session["usuario"];
+                Button btn = (Button)sender;
+                int idArticulo = int.Parse(btn.CommandArgument);
+
+                FavoritoNegocio negocio = new FavoritoNegocio();
+                Favorito favorito = new Favorito();
+                favorito.IdArticulo = idArticulo;
+                favorito.IdUser = user.Id;
+                if (negocio.agregarFavoritos(favorito) > 0)
+                {
+                    btn.Text = "❤️ En favoritos";
+                    btn.Enabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -150,6 +175,37 @@ namespace TPFinalNivel3BuccieroMiguel
             txtPrecioMin.Text = "";
             rbCategoria.ClearSelection();
             rbMarca.ClearSelection();
+        }
+
+        protected void repRepetidor_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            try
+            {
+                if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+                {
+                    Button btn = (Button)e.Item.FindControl("agregarFavoritos");
+
+                    // Si no está logueado, no tocamos nada
+                    if (Session["usuario"] == null)
+                        return;
+
+                    Usuario user = (Usuario)Session["usuario"];
+                    Articulo art = (Articulo)e.Item.DataItem;
+
+                    FavoritoNegocio negocio = new FavoritoNegocio();
+
+                    if (negocio.existeFavoritos(user.Id, art.Id))
+                    {
+                        btn.Text = "❤️ En favoritos";
+                        btn.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
         }
     }
 }

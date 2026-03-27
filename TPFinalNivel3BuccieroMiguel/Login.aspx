@@ -28,7 +28,7 @@
     <div class="d-flex justify-content-center align-items-start vh-100">
         <div class="col-10 col-sm-8 col-md-6 col-lg-4">
             <div class="card shadow p-4">
-                <h2 class="text-center mb-4">Pantalla Login</h2>
+                <h2 class="text-center mb-4">Iniciar sessión</h2>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" />
@@ -38,11 +38,12 @@
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" />
                 </div>
                 <div class="d-grid gap-2 mb-3">
-                    <asp:Button Text="Ingresar" CssClass="btn btn-ingresar" ID="btnLogin" runat="server" />
+                    <asp:Button Text="Ingresar" CssClass="btn btn-ingresar" ID="btnLogin" OnClick="btnLogin_Click" runat="server" />
                 </div>
                 <div class="text-center">
                     <a href="Registrar.aspx">Crear cuenta</a>
                 </div>
+                <asp:Label ID="lblMensaje" runat="server" Text="" CssClass="mt-3 d-block text-center fw-bold"></asp:Label>
             </div>
         </div>
     </div>

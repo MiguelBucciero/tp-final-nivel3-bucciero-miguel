@@ -8,10 +8,10 @@
             transition: transform 0.3s ease;
         }
 
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
         .card-img-top {
             height: 250px;
@@ -37,18 +37,18 @@
             transition: all 0.3s ease;
         }
 
-            .btn-favorito:hover {
-                background-color: #ff6600 !important;
-                color: #fff !important;
-            }
+        .btn-favorito:hover {
+            background-color: #ff6600 !important;
+            color: #fff !important;
+        }
 
-            .btn-favorito:focus {
-                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
-            }
+        .btn-favorito:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+        }
 
-            .btn-favorito:active {
-                transform: scale(0.98);
-            }
+        .btn-favorito:active {
+            transform: scale(0.98);
+        }
 
         .card-img-link {
             display: block;
@@ -57,13 +57,13 @@
             transition: opacity 0.3s ease;
         }
 
-            .card-img-link:hover {
-                opacity: 0.85;
-            }
+        .card-img-link:hover {
+            opacity: 0.85;
+        }
 
-            .card-img-link img {
-                pointer-events: none;
-            }
+        .card-img-link img {
+            pointer-events: none;
+        }
 
         .card h5 {
             font-weight: 600;
@@ -83,10 +83,10 @@
             color: #ff6600 !important;
         }
 
-            .dropdown-toggle:hover {
-                background-color: #ff6600 !important;
-                color: #fff !important;
-            }
+        .dropdown-toggle:hover {
+            background-color: #ff6600 !important;
+            color: #fff !important;
+        }
 
         .dropdown-menu {
             border-radius: 8px;
@@ -102,16 +102,16 @@
             font-weight: 600 !important;
         }
 
-            .accordion-button:not(.collapsed) {
-                background-color: rgba(255, 102, 0, 0.1) !important;
-                color: #ff6600 !important;
-                box-shadow: none !important;
-            }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(255, 102, 0, 0.1) !important;
+            color: #ff6600 !important;
+            box-shadow: none !important;
+        }
 
-            .accordion-button:focus {
-                box-shadow: none !important;
-                border-color: #ff6600 !important;
-            }
+        .accordion-button:focus {
+            box-shadow: none !important;
+            border-color: #ff6600 !important;
+        }
     </style>
 
 </asp:Content>
@@ -127,12 +127,7 @@
 
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingFiltros">
-                        <button class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseFiltros">
-                            <h5>Filtros</h5>
-                        </button>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFiltros"><h5>Filtros</h5></button>
                     </h2>
                     <div id="collapseFiltros"
                         class="accordion-collapse collapse"
@@ -148,9 +143,7 @@
                             <h5>Precio</h5>
                             <asp:TextBox ID="txtPrecioMin" runat="server" CssClass="form-control mb-2" placeholder="Mínimo" TextMode="Number"  ></asp:TextBox>
                             <asp:TextBox ID="txtPrecioMax" runat="server" CssClass="form-control mb-2" placeholder="Máximo" TextMode="Number" ></asp:TextBox>
-                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar"
-                                CssClass="btn btn-favorito w-100 mt-2"
-                                OnClick="btnFiltrar_Click" />
+                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-favorito w-100 mt-2" OnClick="btnFiltrar_Click" />
                         </div>
                     </div>
                 </div>
@@ -177,7 +170,7 @@
 
             </div>
             <div class="row">
-                <asp:Repeater ID="repRepetidor" runat="server">
+                <asp:Repeater ID="repRepetidor" runat="server" OnItemDataBound="repRepetidor_ItemDataBound">
                     <ItemTemplate>
                         <div class="col-12 col-sm-6 col-md-4 mb-4">
                             <div class="card">
