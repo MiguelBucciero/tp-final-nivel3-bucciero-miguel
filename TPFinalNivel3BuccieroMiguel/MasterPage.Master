@@ -70,6 +70,43 @@
         .btn-buscar:focus {
             box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
         }
+
+        .nav-icons {
+            white-space: nowrap;
+        }
+
+        .input-group {
+            margin: 0 auto;
+        }
+
+        .nav-icons {
+            white-space: nowrap !important;
+            margin-left: auto !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Navbar superior - layout con buscador centrado absoluto */
+        .navbar-top .container {
+            max-width: 100% !important;
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+            position: relative !important;
+        }
+
+        .navbar-top .buscador-panel {
+            position: absolute !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 40% !important;
+            max-width: 600px !important;
+        }
+
+        .nav-icons {
+            white-space: nowrap !important;
+            margin-left: auto !important;
+            flex-shrink: 0 !important;
+            padding-right: 0 !important;
+        }
     </style>
 </head>
 <body>
@@ -79,50 +116,57 @@
             <div class="container d-flex align-items-center justify-content-between">
 
                 <!-- Logo -->
-                <a class="navbar-brand d-flex align-items-center me-3" href="Default.aspx">
+                <a class="navbar-brand d-flex align-items-center flex-shrink-0" href="Default.aspx">
                     <img src="https://i.ibb.co/PsqcDnSc/logo4.png" alt="CompraTecno" style="height: 40px; margin-right: 8px;">
                     <span class="text-white fw-bold"></span>
                 </a>
 
-                <!-- Buscador -->
-                <asp:Panel runat="server" DefaultButton="btnBuscar" CssClass="d-flex justify-content-center flex-grow-1">
-                    <div class="input-group" style="max-width: 700px; width: 100%;">
+                <!-- Buscador - centrado -->
+                <asp:Panel runat="server" DefaultButton="btnBuscar" CssClass="buscador-panel">
+                    <div class="input-group">
                         <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" placeholder="Buscar productos"></asp:TextBox>
-
                         <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-buscar" OnClick="btnBuscar_Click">
-            <i class="bi bi-search"></i>
+                <i class="bi bi-search"></i>
                         </asp:LinkButton>
                     </div>
                 </asp:Panel>
 
-                <!-- Iconos de usuario y favoritos y menu admin -->
-                <div class="d-flex align-items-center nav-icons ms-3">
+                <!-- Iconos - extremo derecho -->
+                <div class="d-flex align-items-center nav-icons flex-shrink-0">
 
                     <!-- LOGIN -->
                     <asp:Panel ID="pnlLogin" runat="server">
                         <a href="Login.aspx" class="nav-link text-white d-flex align-items-center">
-                            <i class="bi bi-person me-1"></i> Ingresá
+                            <i class="bi bi-person me-1"></i>Ingresá
                         </a>
                     </asp:Panel>
+
                     <!-- LOGOUT -->
                     <asp:Panel ID="pnlLogout" runat="server" Visible="false">
                         <asp:LinkButton ID="btnLogout" runat="server" OnClick="btnLogout_Click" CssClass="nav-link text-white d-flex align-items-center">
-                            <i class="bi bi-box-arrow-right me-1"></i> Salir
+                <i class="bi bi-box-arrow-right me-1"></i> Salir
                         </asp:LinkButton>
                     </asp:Panel>
 
-
                     <!-- FAVORITOS -->
                     <asp:Panel ID="pnlFavoritosTop" runat="server" Visible="false">
-                        <a href="Favoritos.aspx" class="nav-link text-white">
-                            <i class="bi bi-heart ms-2"> Favoritos</i>
+                        <a href="Favoritos.aspx" class="nav-link text-white d-flex align-items-center">
+                            <i class="bi bi-heart me-1"></i>Favoritos
                         </a>
                     </asp:Panel>
 
                     <!-- ADMIN -->
                     <asp:Panel ID="pnlAdminTop" runat="server" Visible="false">
                         <a href="LIstadoArticulos.aspx" class="nav-link text-white d-flex align-items-center">
-                            <i class="bi bi-gear ms-2"> Menú Admin</i>
+                            <i class="bi bi-gear me-1"></i>Menú Admin
+                        </a>
+                    </asp:Panel>
+
+                    <!-- MI PERFIL -->
+                    <asp:Panel ID="pnlPerfilTop" runat="server" Visible="false">
+                        <a href="MiPerfil.aspx" class="nav-link text-white d-flex align-items-center">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <asp:Label ID="lblUsuario" runat="server" />
                         </a>
                     </asp:Panel>
 

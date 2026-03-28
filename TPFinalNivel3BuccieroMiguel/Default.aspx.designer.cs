@@ -15,15 +15,6 @@ namespace TPFinalNivel3BuccieroMiguel
     {
 
         /// <summary>
-        /// Control rbMarca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rbMarca;
-
-        /// <summary>
         /// Control rbCategoria.
         /// </summary>
         /// <remarks>
@@ -31,6 +22,15 @@ namespace TPFinalNivel3BuccieroMiguel
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rbCategoria;
+
+        /// <summary>
+        /// Control rbMarca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rbMarca;
 
         /// <summary>
         /// Control txtPrecioMin.

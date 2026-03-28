@@ -22,6 +22,16 @@
         .btn-registrar:active {
             transform: scale(0.98);
         }
+
+        .form-control:focus {
+            border-color: #ff6600 !important;
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25) !important;
+        }
+
+        .form-select:focus {
+            border-color: #ff6600 !important;
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25) !important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -52,8 +62,9 @@
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword2" TextMode="Password" />
                 </div>
                 <div class="d-grid gap-2 mb-3">
-                    <asp:Button Text="Registrarse" CssClass="btn btn-registrar" ID="btnRegistrarse" runat="server" />
+                    <asp:Button Text="Registrarse" CssClass="btn btn-registrar" ID="btnRegistrarse" runat="server" OnClick="btnRegistrarse_Click" />
                 </div>
+                <asp:Label ID="lblMensaje" runat="server" CssClass="mt-3 d-block text-center fw-bold"></asp:Label>
                 <div class="text-center">
                     <p class="mb-0">¿Ya tenés cuenta? <a href="Login.aspx">Iniciá sesión acá</a></p>
                 </div>

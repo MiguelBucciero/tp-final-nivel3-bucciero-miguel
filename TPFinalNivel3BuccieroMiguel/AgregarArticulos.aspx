@@ -98,7 +98,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Precio</label>
-                                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" />
+                                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" TextMode="Number" />
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">URL Imagen</label>
@@ -119,7 +119,6 @@
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-agregar" OnClick="btnGuardar_Click" />
                         <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-cancelar" PostBackUrl="ListadoArticulos.aspx" />
                     </div>
-
                     <asp:Label ID="lblMensaje" runat="server" CssClass="mt-3 d-block text-center fw-bold"></asp:Label>
 
                 </div>

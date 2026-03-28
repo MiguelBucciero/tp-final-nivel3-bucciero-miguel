@@ -19,7 +19,8 @@ namespace TPFinalNivel3BuccieroMiguel
                 pnlLogin.Visible = false;
                 pnlFavoritosTop.Visible = true;
                 pnlLogout.Visible = true;
-
+                pnlPerfilTop.Visible = true;
+                lblUsuario.Text = user.Nombre;
                 if (user.Admin)
                 {
                     pnlAdminTop.Visible = true;
@@ -31,6 +32,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 pnlLogout.Visible = false;
                 pnlFavoritosTop.Visible = false;
                 pnlAdminTop.Visible = false;
+                pnlPerfilTop.Visible = false;
             }
         }
 

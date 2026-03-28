@@ -11,7 +11,7 @@ namespace negocio
     public class UsuarioNegocio
     {
         AccesoDatos datos = new AccesoDatos();
-        public bool Login(Usuario usuario)
+        public Usuario Login(Usuario usuario)
         {
             try
             {
@@ -29,9 +29,9 @@ namespace negocio
                         usuario.Apellido = (string)datos.Lector["Apellido"];
                     if (!(datos.Lector["UrlImagenPerfil"] is DBNull))
                         usuario.UrlImagen = (string)datos.Lector["UrlImagenPerfil"];
-                    return true;
+                    return usuario;
                 }
-                return false;
+                return null;
             }
             catch (Exception ex)
             {
@@ -44,11 +44,11 @@ namespace negocio
         }
 
           
-        public int Modificar(Usuario user)
+        public int ModificarUsuario(Usuario user)
         {
             try
             {
-                datos.setearConsulta("UPDATE USERS SET Email = @email, Pass = @pass, Nombre = @nombre, Apellido = @apellido, UrlImagenPerfil = @urlImagen WHERE Id = @id");
+                datos.setearConsulta("UPDATE USERS SET email = @email, pass = @pass, nombre = @nombre, apellido = @apellido, UrlImagenPerfil = @urlImagen WHERE Id = @id");
                 datos.setearParametro("@email", user.Email);
                 datos.setearParametro("@pass", user.Pass);
                 datos.setearParametro("@nombre", user.Nombre);
@@ -72,14 +72,41 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("INSERT INTO USERS (Email, Pass, admin) VALUES (@email, @pass, 0)");
+                datos.setearConsulta("INSERT INTO USERS (email, pass, nombre, apellido, admin) VALUES (@email, @pass, @nombre, @apellido, @admin)");
                 datos.setearParametro("@email", nuevo.Email);
                 datos.setearParametro("@pass", nuevo.Pass);
+                datos.setearParametro("@nombre", nuevo.Nombre);
+                datos.setearParametro("@apellido", nuevo.Apellido);
+                datos.setearParametro("@admin", 0);
                 return datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public bool existeEmail(string email)
+        {
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM USERS WHERE Email = @email");
+                datos.setearParametro("@email", email);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector[0] > 0;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
             finally

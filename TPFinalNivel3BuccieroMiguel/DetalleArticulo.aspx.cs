@@ -66,7 +66,7 @@ namespace TPFinalNivel3BuccieroMiguel
             {
                 if (Session["usuario"] == null)
                 {
-                    Response.Redirect("Login.aspx");
+                    Response.Redirect("Login.aspx", false);
                     return;
                 }
 
@@ -82,10 +82,6 @@ namespace TPFinalNivel3BuccieroMiguel
                     btnAgregarFavoritos.Text = "❤️ En favoritos";
                     btnAgregarFavoritos.Enabled = false;
                 }
-
-
-                btnAgregarFavoritos.Text = "❤️ En favoritos";
-                btnAgregarFavoritos.Enabled = false;
             }
             catch (Exception ex)
             {

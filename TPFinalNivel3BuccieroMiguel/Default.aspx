@@ -134,11 +134,11 @@
                         data-bs-parent="#accordionFiltros">
 
                         <div class="accordion-body">
-                            <h5>Marca</h5>
-                            <asp:RadioButtonList ID="rbMarca" runat="server" CssClass="form-check"></asp:RadioButtonList>
-                            <hr />
                             <h5>Categoría</h5>
                             <asp:RadioButtonList ID="rbCategoria" runat="server" CssClass="form-check"></asp:RadioButtonList>
+                            <hr />
+                            <h5>Marca</h5>
+                            <asp:RadioButtonList ID="rbMarca" runat="server" CssClass="form-check"></asp:RadioButtonList>
                             <hr />
                             <h5>Precio</h5>
                             <asp:TextBox ID="txtPrecioMin" runat="server" CssClass="form-control mb-2" placeholder="Mínimo" TextMode="Number"  ></asp:TextBox>

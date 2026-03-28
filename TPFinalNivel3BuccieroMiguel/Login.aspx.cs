@@ -18,29 +18,22 @@ namespace TPFinalNivel3BuccieroMiguel
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            bool esAdmin = true;
-            Usuario usuario = new Usuario();
-            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             try
             {
+                Usuario usuario = new Usuario();
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+
                 usuario.Email = txtEmail.Text.Trim();
                 usuario.Pass = txtPassword.Text.Trim();
-                if (usuarioNegocio.Login(usuario))
+
+                usuario = usuarioNegocio.Login(usuario);
+
+                if (usuario != null)
                 {
-                    if (usuario.Admin)
-                    {
-                        esAdmin = true;
-                        Session.Add("usuario", usuario);
-                        Session.Add("esAdmin", esAdmin);
-                        Response.Redirect("Default.aspx", false);
-                    }
-                    else
-                    {
-                        esAdmin = false;
-                        Session.Add("usuario", usuario);
-                        Session.Add("esAdmin", esAdmin);
-                        Response.Redirect("Default.aspx", false);
-                    }
+                    Session.Add("usuario", usuario);
+                    Session.Add("esAdmin", usuario.Admin);
+
+                    Response.Redirect("Default.aspx", false);
                 }
                 else
                 {
