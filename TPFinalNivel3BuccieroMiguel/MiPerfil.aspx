@@ -21,18 +21,18 @@
             transition: all 0.3s ease;
         }
 
-            .btn-editar:hover {
-                background-color: #ff6600 !important;
-                color: #fff !important;
-            }
+        .btn-editar:hover {
+            background-color: #ff6600 !important;
+            color: #fff !important;
+        }
 
-            .btn-editar:focus {
-                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
-            }
+        .btn-editar:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+        }
 
-            .btn-editar:active {
-                transform: scale(0.98);
-            }
+        .btn-editar:active {
+            transform: scale(0.98);
+        }
 
         .form-control:focus {
             border-color: #ff6600 !important;
@@ -43,10 +43,10 @@
             border-color: #dc3545 !important;
         }
 
-            .is-invalid:focus {
-                border-color: #dc3545 !important;
-                box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
-            }
+        .is-invalid:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+        }
     </style>
 </asp:Content>
 
@@ -80,7 +80,7 @@
                                 <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" Enabled="false" />
                             </div>
                             <div class="mb-2 mb-2 w-75 text-start">
-                                <label class="form-label">Nueva contraseña</label>
+                                <label class="form-label">Nueva contraseña</label>                     
                                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" Enabled="false" />
                             </div>
                         </div>
@@ -89,8 +89,9 @@
                         <div class="col-md-6 text-center">
                             <asp:Image ID="imgPerfil" runat="server" CssClass="perfil-img mt-4 mb-3" />
                             <br />
-                            <div class="mb-2 w-75 mx-auto mt-3">
-                                <asp:TextBox ID="txtImagen" runat="server" CssClass="form-control" placeholder="URL de la imagen" AutoPostBack="true" OnTextChanged="txtImagen_TextChanged" Enabled="false" />
+                            <div class="mb-2 w-75 mx-auto">
+                                <asp:Label ID="lblImagen" Text="Subir imagen" runat="server" class="form-label" />
+                                <asp:FileUpload ID="fuImagen" runat="server" CssClass="form-control" />
                             </div>
                         </div>
                     </div>

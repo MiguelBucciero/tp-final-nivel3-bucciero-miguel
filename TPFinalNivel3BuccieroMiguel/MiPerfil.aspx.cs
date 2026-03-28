@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -34,8 +35,6 @@ namespace TPFinalNivel3BuccieroMiguel
 
             txtPassword.Text = "";
 
-            txtImagen.Text = user.UrlImagen;
-
             imgPerfil.ImageUrl = !string.IsNullOrEmpty(user.UrlImagen)
                 ? user.UrlImagen
                 : "https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-2201.jpg?semt=ais_incoming&w=740&q=80";
@@ -45,23 +44,17 @@ namespace TPFinalNivel3BuccieroMiguel
             txtNombre.Enabled = estado;
             txtApellido.Enabled = estado;
             txtPassword.Enabled = estado;
-            txtImagen.Enabled = estado;
-
-            // email opcional (recomendado dejarlo bloqueado siempre)
             txtEmail.Enabled = false;
 
             btnGuardar.Visible = estado;
             btnEditar.Visible = !estado;
+            fuImagen.Visible = estado;
+            lblImagen.Visible = estado;
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
             habilitarEdicion(true);
-        }
-
-        protected void txtImagen_TextChanged(object sender, EventArgs e)
-        {
-            imgPerfil.ImageUrl = txtImagen.Text;
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -71,7 +64,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 txtNombre.CssClass = "form-control";
                 txtApellido.CssClass = "form-control";
                 txtPassword.CssClass = "form-control";
-                txtImagen.CssClass = "form-control";
+
                 if (string.IsNullOrWhiteSpace(txtNombre.Text))
                 {
                     lblMensaje.Text = "Debe completar el nombre.";
@@ -89,19 +82,30 @@ namespace TPFinalNivel3BuccieroMiguel
                     txtApellido.CssClass = "form-control is-invalid";
                     return;
                 }
-
-                if (string.IsNullOrWhiteSpace(txtImagen.Text))
+           
+                string extension = Path.GetExtension(fuImagen.FileName).ToLower();
+                if (fuImagen.HasFile && extension != ".jpg" && extension != ".png" && extension != ".jpeg")
                 {
-                    lblMensaje.Text = "Debe completar la URL de la imagen.";
+                    lblMensaje.Text = "Solo se permiten imágenes (.jpg, .png, .jpeg)";
                     lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
-
-                    txtImagen.CssClass = "form-control is-invalid";
                     return;
                 }
+
                 Usuario user = (Usuario)Session["usuario"];
+                string rutaImagen = user.UrlImagen;
+                if (fuImagen.HasFile)
+                {
+                    string carpeta = Server.MapPath("~/Imagenes/");
+            
+                    string nombreArchivo = Path.GetFileName(fuImagen.FileName);
+                    string rutaCompleta = Path.Combine(carpeta, nombreArchivo);
+                    fuImagen.SaveAs(rutaCompleta);
+                    rutaImagen = "~/Imagenes/" + nombreArchivo;
+                }
+
                 user.Nombre = txtNombre.Text.Trim();
                 user.Apellido = txtApellido.Text.Trim();
-                user.UrlImagen = txtImagen.Text.Trim();
+                user.UrlImagen = rutaImagen;
 
                 if (!string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
@@ -113,7 +117,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 if (negocio.ModificarUsuario(user) > 0)
                 {
                     Session["usuario"] = user;
-
+                    cargarDatos();
                     lblMensaje.Text = "Datos actualizados correctamente";
                     lblMensaje.CssClass = "text-success mt-3 d-block text-center fw-bold";
 

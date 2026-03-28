@@ -10,18 +10,18 @@
             transition: all 0.3s ease;
         }
 
-            .btn-ingresar:hover {
-                background-color: #ff6600 !important;
-                color: #fff !important;
-            }
+        .btn-ingresar:hover {
+            background-color: #ff6600 !important;
+            color: #fff !important;
+        }
 
-            .btn-ingresar:focus {
-                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
-            }
+        .btn-ingresar:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+        }
 
-            .btn-ingresar:active {
-                transform: scale(0.98);
-            }
+        .btn-ingresar:active {
+            transform: scale(0.98);
+        }
 
         .form-control:focus {
             border-color: #ff6600 !important;
@@ -32,10 +32,10 @@
             border-color: #dc3545 !important;
         }
 
-            .is-invalid:focus {
-                border-color: #dc3545 !important;
-                box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
-            }
+        .is-invalid:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

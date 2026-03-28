@@ -7,10 +7,10 @@
             transition: transform 0.3s ease;
         }
 
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
         .card-img-top {
             height: 250px;
@@ -35,13 +35,13 @@
             transition: opacity 0.3s ease;
         }
 
-            .card-img-link:hover {
-                opacity: 0.85;
-            }
+        .card-img-link:hover {
+            opacity: 0.85;
+        }
 
-            .card-img-link img {
-                pointer-events: none;
-            }
+        .card-img-link img {
+            pointer-events: none;
+        }
 
         .card h5 {
             font-weight: 600;
@@ -55,27 +55,25 @@
             transition: all 0.3s ease;
         }
 
-            .btn-favorito:hover {
-                background-color: #ff6600 !important;
-                color: #fff !important;
-            }
+        .btn-favorito:hover {
+            background-color: #ff6600 !important;
+            color: #fff !important;
+        }
 
-            .btn-favorito:focus {
-                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
-            }
+        .btn-favorito:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+        }
 
-            .btn-favorito:active {
-                transform: scale(0.98);
-            }
+        .btn-favorito:active {
+            transform: scale(0.98);
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2 class="mt-4 text-center fw-bold">Mis Favoritos ❤️</h2>
     <hr />
-
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-
             <div class="row">
                 <asp:Repeater ID="repFavoritos" runat="server">
                     <ItemTemplate>
@@ -87,21 +85,13 @@
                                 <div class="card-body">
                                     <h5><%#Eval("Nombre") %></h5>
                                     <p><%#Eval("Precio") %> $</p>
-                                    <asp:Button
-                                        ID="btnEliminar"
-                                        runat="server"
-                                        Text="❌ Quitar"
-                                        CssClass="btn btn-favorito mt-2"
-                                        CommandArgument='<%#Eval("Id") %>'
-                                        OnClick="btnEliminar_Click" />
+                                    <asp:Button ID="btnEliminar" runat="server" Text="❌ Quitar" CssClass="btn btn-favorito mt-2" CommandArgument='<%#Eval("Id") %>' OnClick="btnEliminar_Click" />
                                 </div>
-
                             </div>
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
-
         </div>
     </div>
 </asp:Content>

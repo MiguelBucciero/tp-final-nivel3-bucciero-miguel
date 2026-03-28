@@ -105,6 +105,15 @@ namespace TPFinalNivel3BuccieroMiguel
         protected global::System.Web.UI.WebControls.Panel pnlPerfilTop;
 
         /// <summary>
+        /// Control imgPerfilNav.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgPerfilNav;
+
+        /// <summary>
         /// Control lblUsuario.
         /// </summary>
         /// <remarks>

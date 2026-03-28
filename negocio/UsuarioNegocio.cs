@@ -43,7 +43,6 @@ namespace negocio
             }
         }
 
-          
         public int ModificarUsuario(Usuario user)
         {
             try

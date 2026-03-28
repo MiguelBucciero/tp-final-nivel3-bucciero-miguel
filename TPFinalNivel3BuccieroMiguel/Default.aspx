@@ -156,18 +156,12 @@
             <div class="d-flex justify-content-end align-items-center mb-3">
 
                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown">
-                        Ordenar por
-                    </button>
-
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Ordenar por</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="Default.aspx?orden=precio_desc">Mayor precio</a></li>
                         <li><a class="dropdown-item" href="Default.aspx?orden=asc">Menor precio</a></li>
                     </ul>
                 </div>
-
             </div>
             <div class="row">
                 <asp:Repeater ID="repRepetidor" runat="server" OnItemDataBound="repRepetidor_ItemDataBound">

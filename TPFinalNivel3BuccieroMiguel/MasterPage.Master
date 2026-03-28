@@ -29,14 +29,14 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-            .navbar-bottom .nav-link {
-                color: #333;
-                font-weight: 500 !important;
-            }
+        .navbar-bottom .nav-link {
+            color: #333;
+            font-weight: 500 !important;
+        }
 
-                .navbar-bottom .nav-link:hover {
-                    color: #ff4500;
-                }
+        .navbar-bottom .nav-link:hover {
+            color: #ff4500;
+        }
 
         .nav-icons a {
             color: #ff6600 !important;
@@ -45,10 +45,10 @@
             transition: transform 0.2s ease, color 0.2s ease;
         }
 
-            .nav-icons a:hover {
-                transform: scale(1.15);
-                color: #ffffff !important;
-            }
+        .nav-icons a:hover {
+            transform: scale(1.15);
+            color: #ffffff !important;
+        }
 
         .btn-buscar {
             border-color: #ff6600 !important;
@@ -85,7 +85,6 @@
             flex-shrink: 0 !important;
         }
 
-        /* Navbar superior - layout con buscador centrado absoluto */
         .navbar-top .container {
             max-width: 100% !important;
             padding-left: 1.5rem !important;
@@ -106,6 +105,15 @@
             margin-left: auto !important;
             flex-shrink: 0 !important;
             padding-right: 0 !important;
+        }
+
+        #imgPerfilNav {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            border: 2px solid #ff6600 !important;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -164,8 +172,9 @@
 
                     <!-- MI PERFIL -->
                     <asp:Panel ID="pnlPerfilTop" runat="server" Visible="false">
-                        <a href="MiPerfil.aspx" class="nav-link text-white d-flex align-items-center">
-                            <i class="bi bi-person-circle me-1"></i>
+                        <a href="MiPerfil.aspx" class="nav-link text-white d-flex align-items-center gap-2">
+                            <asp:Image ID="imgPerfilNav" runat="server"
+                                Style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #ff6600;" />
                             <asp:Label ID="lblUsuario" runat="server" />
                         </a>
                     </asp:Panel>
