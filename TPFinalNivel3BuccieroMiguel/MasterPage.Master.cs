@@ -21,10 +21,25 @@ namespace TPFinalNivel3BuccieroMiguel
                 pnlLogout.Visible = true;
                 pnlPerfilTop.Visible = true;
                 lblUsuario.Text = user.Nombre;
-                string urlImagen = !string.IsNullOrEmpty(user.UrlImagen)
-                ? (user.UrlImagen)
-                : "https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-2201.jpg";
-                imgPerfilNav.ImageUrl = urlImagen;
+                string imagenDefault = "~/Imagenes/imPerfil.jpg";
+
+                if (!string.IsNullOrEmpty(user.UrlImagen))
+                {
+                    string rutaFisica = Server.MapPath(user.UrlImagen);
+                    if (System.IO.File.Exists(rutaFisica))
+                    {
+                        imgPerfilNav.ImageUrl = ResolveUrl(user.UrlImagen);
+                    }
+                    else
+                    {
+                        imgPerfilNav.ImageUrl = ResolveUrl(imagenDefault);
+                    }
+                }
+                else
+                {
+                    imgPerfilNav.ImageUrl = ResolveUrl(imagenDefault);
+                }
+
                 if (user.Admin)
                 {
                     pnlAdminTop.Visible = true;

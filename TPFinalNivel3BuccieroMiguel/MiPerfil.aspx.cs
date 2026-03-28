@@ -35,9 +35,26 @@ namespace TPFinalNivel3BuccieroMiguel
 
             txtPassword.Text = "";
 
-            imgPerfil.ImageUrl = !string.IsNullOrEmpty(user.UrlImagen)
-                ? user.UrlImagen
-                : "https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-2201.jpg?semt=ais_incoming&w=740&q=80";
+            string imagenDefault = "~/Imagenes/imPerfil.jpg";
+
+            if (!string.IsNullOrEmpty(user.UrlImagen))
+            {
+                // Verificar si el archivo existe fisicamente en el servidor
+                string rutaFisica = Server.MapPath(user.UrlImagen);
+                if (File.Exists(rutaFisica))
+                {
+                    imgPerfil.ImageUrl = ResolveUrl(user.UrlImagen);
+                }
+                else
+                {
+                    imgPerfil.ImageUrl = imagenDefault;
+                }
+            }
+            else
+            {
+                imgPerfil.ImageUrl = imagenDefault;
+            }
+
         }
         private void habilitarEdicion(bool estado)
         {
