@@ -103,7 +103,11 @@
                                 <img id="imgPreview" class="img-fluid mt-2" style="max-height: 150px;" />
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Descripción</label><asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4" />
+                                <label class="form-label">Descripción</label>
+                                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4" MaxLength="150" />
+                                <div class="d-flex justify-content-end">
+                                    <small id="contadorDesc" class="text-muted">0 / 150</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,5 +137,22 @@
             txtImagen.addEventListener("input", actualizarImagen);
             actualizarImagen();
         });
+        const txtDesc = document.getElementById("<%= txtDescripcion.ClientID %>");
+        const contador = document.getElementById("contadorDesc");
+
+        function actualizarContador() {
+            const largo = txtDesc.value.length;
+            contador.textContent = largo + " / 150";
+            if (largo >= 150) {
+                contador.classList.add("text-danger");
+                contador.classList.remove("text-muted");
+            } else {
+                contador.classList.remove("text-danger");
+                contador.classList.add("text-muted");
+            }
+        }
+
+        txtDesc.addEventListener("input", actualizarContador);
+        actualizarContador();
     </script>
 </asp:Content>

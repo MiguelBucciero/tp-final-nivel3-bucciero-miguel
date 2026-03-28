@@ -123,7 +123,14 @@ namespace TPFinalNivel3BuccieroMiguel
                 {
                     lblMensaje.Text = "Debe completar la descripción.";
                     lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+                    txtDescripcion.CssClass = "form-control is-invalid";
+                    return;
+                }
 
+                if (txtDescripcion.Text.Trim().Length > 150)
+                {
+                    lblMensaje.Text = "La descripción no puede superar los 150 caracteres.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
                     txtDescripcion.CssClass = "form-control is-invalid";
                     return;
                 }
