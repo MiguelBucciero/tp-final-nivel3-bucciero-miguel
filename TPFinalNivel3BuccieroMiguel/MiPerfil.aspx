@@ -39,6 +39,14 @@
             box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25) !important;
         }
 
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+            .is-invalid:focus {
+                border-color: #dc3545 !important;
+                box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+            }
     </style>
 </asp:Content>
 
@@ -51,37 +59,39 @@
                 <div class="card shadow p-4 perfil-card">
 
                     <h2 class="text-center mb-4">Mi Perfil 👤</h2>
-
+                    <hr />
                     <div class="row">
 
                         <!-- 🔹 IZQUIERDA: DATOS -->
-                        <div class="col-md-6">
+                        <div class="col-md-6 d-flex flex-column align-items-center">
 
-                            <div class="mb-2">
+                            <div class="mb-2 w-75">
                                 <label class="form-label">Nombre</label>
-                                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control w-75" Enabled="false" />
+                                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" Enabled="false" />
                             </div>
 
-                            <div class="mb-2">
+                            <div class="mb-2 w-75">
                                 <label class="form-label">Apellido</label>
-                                <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control w-75" Enabled="false" />
+                                <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" Enabled="false" />
                             </div>
 
-                            <div class="mb-2">
+                            <div class="mb-2 w-75">
                                 <label class="form-label">Email</label>
-                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control w-75" Enabled="false" />
+                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" Enabled="false" />
                             </div>
-                            <div class="mb-2 text-start">
+                            <div class="mb-2 mb-2 w-75 text-start">
                                 <label class="form-label">Nueva contraseña</label>
-                                <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control w-75" TextMode="Password" Enabled="false" />
+                                <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" Enabled="false" />
                             </div>
                         </div>
 
                         <!-- 🔹 DERECHA: FOTO  -->
                         <div class="col-md-6 text-center">
-
-                            <asp:Image ID="imgPerfil" runat="server" CssClass="perfil-img mb-3" />
-                            <asp:TextBox ID="txtImagen" runat="server" CssClass="form-control w-75" placeholder="URL de la imagen" AutoPostBack="true" OnTextChanged="txtImagen_TextChanged" Enabled="false" />
+                            <asp:Image ID="imgPerfil" runat="server" CssClass="perfil-img mt-4 mb-3" />
+                            <br />
+                            <div class="mb-2 w-75 mx-auto mt-3">
+                                <asp:TextBox ID="txtImagen" runat="server" CssClass="form-control" placeholder="URL de la imagen" AutoPostBack="true" OnTextChanged="txtImagen_TextChanged" Enabled="false" />
+                            </div>
                         </div>
                     </div>
 

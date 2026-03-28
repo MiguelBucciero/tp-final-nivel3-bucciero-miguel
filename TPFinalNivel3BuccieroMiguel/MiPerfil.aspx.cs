@@ -68,12 +68,41 @@ namespace TPFinalNivel3BuccieroMiguel
         {
             try
             {
+                txtNombre.CssClass = "form-control";
+                txtApellido.CssClass = "form-control";
+                txtPassword.CssClass = "form-control";
+                txtImagen.CssClass = "form-control";
+                if (string.IsNullOrWhiteSpace(txtNombre.Text))
+                {
+                    lblMensaje.Text = "Debe completar el nombre.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtNombre.CssClass = "form-control is-invalid";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtApellido.Text))
+                {
+                    lblMensaje.Text = "Debe completar el apellido.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtApellido.CssClass = "form-control is-invalid";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtImagen.Text))
+                {
+                    lblMensaje.Text = "Debe completar la URL de la imagen.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtImagen.CssClass = "form-control is-invalid";
+                    return;
+                }
                 Usuario user = (Usuario)Session["usuario"];
                 user.Nombre = txtNombre.Text.Trim();
                 user.Apellido = txtApellido.Text.Trim();
                 user.UrlImagen = txtImagen.Text.Trim();
 
-                // solo actualiza password si escribió algo
                 if (!string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
                     user.Pass = txtPassword.Text.Trim();

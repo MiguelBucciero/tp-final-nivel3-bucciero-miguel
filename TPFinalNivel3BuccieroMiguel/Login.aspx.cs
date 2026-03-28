@@ -20,6 +20,22 @@ namespace TPFinalNivel3BuccieroMiguel
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(txtEmail.Text))
+                {
+                    lblMensaje.Text = "Debe completar Email.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+                    txtEmail.CssClass = "form-control is-invalid";
+                    txtPassword.CssClass = "form-control";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtPassword.Text))
+                {
+                    lblMensaje.Text = "Debe completar Contraseña.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+                    txtPassword.CssClass = "form-control is-invalid";
+                    txtEmail.CssClass = "form-control";
+                    return;
+                }
                 Usuario usuario = new Usuario();
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
 

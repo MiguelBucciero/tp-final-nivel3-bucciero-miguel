@@ -52,6 +52,16 @@
             border-color: #ff6600 !important;
             box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25) !important;
         }
+
+        .is-invalid:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+        .is-invalid::placeholder {
+            color: #dc3545;
+            opacity: 0.7;
+        }
     </style>
 </asp:Content>
 
@@ -129,18 +139,18 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const txtImagen = document.getElementById("<%= txtImagen.ClientID %>");
-        const imgPreview = document.getElementById("imgPreview");
+            const imgPreview = document.getElementById("imgPreview");
 
-        function actualizarImagen() {
-            if (txtImagen.value) {
-                imgPreview.src = txtImagen.value;
-                imgPreview.style.display = "block";
-            } else {
-                imgPreview.style.display = "none";
+            function actualizarImagen() {
+                if (txtImagen.value) {
+                    imgPreview.src = txtImagen.value;
+                    imgPreview.style.display = "block";
+                } else {
+                    imgPreview.style.display = "none";
+                }
             }
-        }
-        txtImagen.addEventListener("input", actualizarImagen);
-        actualizarImagen();
-    });
+            txtImagen.addEventListener("input", actualizarImagen);
+            actualizarImagen();
+        });
     </script>
 </asp:Content>

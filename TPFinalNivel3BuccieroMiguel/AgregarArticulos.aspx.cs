@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -62,7 +63,7 @@ namespace TPFinalNivel3BuccieroMiguel
             txtCodigo.Text = articulo.CodigoArticulo;
             txtNombre.Text = articulo.Nombre;
             txtDescripcion.Text = articulo.Descripcion;
-            txtPrecio.Text = articulo.Precio.ToString();
+            txtPrecio.Text = articulo.Precio.ToString(CultureInfo.InvariantCulture);
             txtImagen.Text = articulo.Imagen;
 
             ddlMarca.SelectedValue = articulo.Marca.Id.ToString();
@@ -73,6 +74,60 @@ namespace TPFinalNivel3BuccieroMiguel
         {
             try
             {
+                txtCodigo.CssClass = "form-control";
+                txtNombre.CssClass = "form-control";
+                txtPrecio.CssClass = "form-control";
+                txtDescripcion.CssClass = "form-control";
+                txtImagen.CssClass = "form-control";
+
+                if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+                {
+                    lblMensaje.Text = "Debe completar el código.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtCodigo.CssClass = "form-control is-invalid";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtNombre.Text))
+                {
+                    lblMensaje.Text = "Debe completar el nombre.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtNombre.CssClass = "form-control is-invalid";
+                    return;
+                }
+
+
+                decimal precio;
+
+                if (string.IsNullOrWhiteSpace(txtPrecio.Text))
+                {
+                    lblMensaje.Text = "Debe completar el precio.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtPrecio.CssClass = "form-control is-invalid";
+                    return;
+                }
+
+                if (!decimal.TryParse(txtPrecio.Text.Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out precio))
+                {
+                    lblMensaje.Text = "El precio debe ser un número válido.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtPrecio.CssClass = "form-control is-invalid";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
+                {
+                    lblMensaje.Text = "Debe completar la descripción.";
+                    lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
+
+                    txtDescripcion.CssClass = "form-control is-invalid";
+                    return;
+                }
+
                 Articulo nuevo = new Articulo();
                 if (Request.QueryString["id"] != null)
                 {
@@ -88,7 +143,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 nuevo.Categoria = new Categoria();
                 nuevo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
 
-                nuevo.Precio = decimal.Parse(txtPrecio.Text.Trim());
+                nuevo.Precio = precio;
 
                 nuevo.Imagen = txtImagen.Text.Trim();
 
@@ -122,7 +177,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 }
                 limpiarCampos();
                 Session.Remove("listaArticulo");
-                Response.AddHeader("REFRESH", "2;URL=ListadoArticulos.aspx");
+                Response.AddHeader("REFRESH", "1;URL=ListadoArticulos.aspx");
 
             }
             catch (Exception ex)
