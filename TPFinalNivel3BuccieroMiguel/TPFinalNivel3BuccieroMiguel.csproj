@@ -77,6 +77,7 @@
     <Content Include="Login.aspx" />
     <Content Include="MiPerfil.aspx" />
     <Content Include="Registrar.aspx" />
+    <Content Include="Script_DB\Script_DB.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
