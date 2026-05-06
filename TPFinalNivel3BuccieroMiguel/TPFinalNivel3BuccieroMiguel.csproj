@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AgregarArticulos.aspx" />
+    <Content Include="AgregarMarca.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleArticulo.aspx" />
     <Content Include="Error.aspx" />
@@ -87,6 +88,13 @@
     </Compile>
     <Compile Include="AgregarArticulos.aspx.designer.cs">
       <DependentUpon>AgregarArticulos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AgregarMarca.aspx.cs">
+      <DependentUpon>AgregarMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarMarca.aspx.designer.cs">
+      <DependentUpon>AgregarMarca.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

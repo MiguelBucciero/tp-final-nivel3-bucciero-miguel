@@ -18,6 +18,7 @@ namespace TPFinalNivel3BuccieroMiguel
             {
                 Session.Add("error", "No tiene los permisos necesarios para acceder a esta página.");
                 Response.Redirect("Error.aspx");
+                return;
             }
             if (!IsPostBack)
             {
@@ -58,7 +59,7 @@ namespace TPFinalNivel3BuccieroMiguel
         private void cargarArticulo(int id)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            Articulo articulo = negocio.cargarArticulo(new Articulo { Id = id });
+            Articulo articulo = negocio.cargarArticulo(id);
 
             txtCodigo.Text = articulo.CodigoArticulo;
             txtNombre.Text = articulo.Nombre;
@@ -143,35 +144,32 @@ namespace TPFinalNivel3BuccieroMiguel
                 nuevo.CodigoArticulo = txtCodigo.Text.Trim();
                 nuevo.Nombre = txtNombre.Text.Trim();
                 nuevo.Descripcion = txtDescripcion.Text.Trim();
-
                 nuevo.Marca = new Marca();
                 nuevo.Marca.Id = int.Parse(ddlMarca.SelectedValue);
-
                 nuevo.Categoria = new Categoria();
                 nuevo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
-
                 nuevo.Precio = precio;
-
                 nuevo.Imagen = txtImagen.Text.Trim();
 
                 ArticuloNegocio negocio = new ArticuloNegocio();
+                bool exito = false;
                 if (Request.QueryString["id"] != null)
                 {
-                    if (negocio.modificar(nuevo) > 0)
+                    if (exito = negocio.modificar(nuevo) > 0)
                     {
                         lblMensaje.Text = "Artículo modificado correctamente.";
                         lblMensaje.CssClass = "text-success mt-3 d-block text-center fw-bold";
                     }
                     else
                     {
-                        lblMensaje.Text = "No se pudo agregar el artículo.";
+                        lblMensaje.Text = "No se pudo modificar el artículo.";
                         lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
                     }
                 }
                 else
                 {
                     
-                    if (negocio.agregar(nuevo) > 0)
+                    if (exito = negocio.agregar(nuevo) > 0)
                     {
                         lblMensaje.Text = "Artículo agregado correctamente.";
                         lblMensaje.CssClass = "text-success mt-3 d-block text-center fw-bold";
@@ -182,9 +180,12 @@ namespace TPFinalNivel3BuccieroMiguel
                         lblMensaje.CssClass = "text-danger mt-3 d-block text-center fw-bold";
                     }
                 }
-                limpiarCampos();
-                Session.Remove("listaArticulo");
-                Response.AddHeader("REFRESH", "1;URL=ListadoArticulos.aspx");
+                if (exito)
+                {
+                    limpiarCampos();
+                    Session.Remove("listaArticulo");
+                    Response.AddHeader("REFRESH", "1;URL=ListadoArticulos.aspx");
+                }
 
             }
             catch (Exception ex)
@@ -193,7 +194,7 @@ namespace TPFinalNivel3BuccieroMiguel
                 Response.Redirect("Error.aspx");
             }
         }
-        protected void limpiarCampos()
+        private void limpiarCampos()
         {
             txtCodigo.Text = "";
             txtNombre.Text = "";

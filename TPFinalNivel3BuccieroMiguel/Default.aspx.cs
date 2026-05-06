@@ -37,28 +37,22 @@ namespace TPFinalNivel3BuccieroMiguel
                     Session.Add("listaArticulo", listaArticulo);
                 }
 
-                // FILTRO POR CATEGORIA
                 if (Request.QueryString["categoria"] != null)
                 {
                     int categoria = int.Parse(Request.QueryString["categoria"]);
                     listaArticulo = listaArticulo.Where(x => x.Categoria != null && x.Categoria.Id == categoria).ToList();
                 }
 
-                // BUSQUEDA
                 if (Request.QueryString["buscar"] != null)
                 {
                     string texto = Request.QueryString["buscar"].ToLower();
-                    listaArticulo = listaArticulo.Where(x =>
-                        x.Nombre.ToLower().Contains(texto) ||
-                        (x.Marca != null && x.Marca.Descripcion.ToLower().Contains(texto))
-                    ).ToList();
+                    listaArticulo = listaArticulo.Where(x =>x.Nombre.ToLower().Contains(texto) ||(x.Marca != null && x.Marca.Descripcion.ToLower().Contains(texto))).ToList();
                 }
 
-                // ORDENAMIENTO
                 if (Request.QueryString["orden"] != null)
                 {
                     string orden = Request.QueryString["orden"];
-                    if (orden == "precio_desc")
+                    if (orden == "precio_desc") 
                         listaArticulo = listaArticulo.OrderByDescending(x => x.Precio).ToList();
                     else if (orden == "precio_asc")
                         listaArticulo = listaArticulo.OrderBy(x => x.Precio).ToList();
@@ -82,13 +76,11 @@ namespace TPFinalNivel3BuccieroMiguel
                 MarcaNegocio marcaNegocio = new MarcaNegocio();
                 List<Marca> listaMarca = marcaNegocio.listar();
 
-                // MARCAS
                 rbMarca.DataSource = listaMarca;
                 rbMarca.DataTextField = "Descripcion";
                 rbMarca.DataValueField = "Id";
                 rbMarca.DataBind();
 
-                // CATEGORIAS
                 rbCategoria.DataSource = listaCategoria;
                 rbCategoria.DataTextField = "Descripcion";
                 rbCategoria.DataValueField = "Id";
@@ -185,7 +177,6 @@ namespace TPFinalNivel3BuccieroMiguel
                 {
                     Button btn = (Button)e.Item.FindControl("agregarFavoritos");
 
-                    // Si no está logueado, no tocamos nada
                     if (Session["usuario"] == null)
                         return;
 

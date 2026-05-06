@@ -50,12 +50,12 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public Articulo cargarArticulo(Articulo nuevo)
+        public Articulo cargarArticulo(int id)
         {
             try
             {
                 datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.ImagenUrl, A.Precio, A.IdCategoria, C.Descripcion AS Categoria, M.Id AS IdMarca, M.Descripcion AS Marca FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS C ON A.IdCategoria=C.Id where A.Id=@Id");
-                datos.setearParametro("Id",nuevo.Id );
+                datos.setearParametro("Id",id );
                 datos.ejecutarLectura();
                 
                 Articulo aux = new Articulo();
@@ -127,7 +127,6 @@ namespace negocio
         {
             try
             {
-
                 datos.setearConsulta("INSERT INTO ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) VALUES (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
                 datos.setearParametro("@Codigo", nuevo.CodigoArticulo);
                 datos.setearParametro("@Nombre", nuevo.Nombre);
@@ -214,29 +213,27 @@ namespace negocio
             List<Articulo> lista = new List<Articulo>();
             try
             {
-                string consulta = @" SELECT A.Id, Codigo, Nombre, A.Descripcion, Precio, ImagenUrl, C.Descripcion AS Categoria, C.Id, M.Descripcion AS Marca, M.Id AS IdMarca FROM ARTICULOS A INNER JOIN CATEGORIAS C ON C.Id = A.IdCategoria INNER JOIN MARCAS M ON M.Id = A.IdMarca WHERE 1=1";
+                string consulta = @" SELECT A.Id, Codigo, Nombre, A.Descripcion, Precio, ImagenUrl, C.Descripcion AS Categoria, C.Id AS IdCategoria, M.Descripcion AS Marca, M.Id AS IdMarca FROM ARTICULOS A INNER JOIN CATEGORIAS C ON C.Id = A.IdCategoria INNER JOIN MARCAS M ON M.Id = A.IdMarca WHERE 1=1";
                 if (marca != 0)
-                {
-                    consulta += " AND M.Id = " + marca;
-                }
+                    consulta += " AND M.Id = @IdMarca";
                 if (categoria != 0)
-                {
-                    consulta += " AND C.Id = " + categoria;
-                }
+                    consulta += " AND C.Id = @IdCategoria";
                 if (precioMin != 0 && precioMax != 0)
-                {
-                    consulta += " AND Precio BETWEEN " + precioMin + " AND " + precioMax;
-                }
+                    consulta += " AND A.Precio BETWEEN @PrecioMin AND @PrecioMax";
                 else if (precioMin != 0)
-                {
-                    consulta += " AND Precio >= " + precioMin;
-                }
+                    consulta += " AND A.Precio >= @PrecioMin";
                 else if (precioMax != 0)
-                {
-                    consulta += " AND Precio <= " + precioMax;
-                }
+                    consulta += " AND A.Precio <= @PrecioMax";
 
                 datos.setearConsulta(consulta);
+                if (marca != 0)
+                    datos.setearParametro("@IdMarca", marca);
+                if (categoria != 0) 
+                    datos.setearParametro("@IdCategoria", categoria);
+                if (precioMin != 0) 
+                    datos.setearParametro("@PrecioMin", precioMin);
+                if (precioMax != 0) 
+                    datos.setearParametro("@PrecioMax", precioMax);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -246,13 +243,14 @@ namespace negocio
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
                     aux.Precio = (Decimal)datos.Lector["Precio"];
-                    aux.Imagen = (string)datos.Lector["ImagenUrl"];
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        aux.Imagen = (string)datos.Lector["ImagenUrl"];
                     aux.Categoria = new Categoria();
-                    aux.Categoria.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.Categoria.Id = (int)datos.Lector["Id"];
+                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
                     aux.Marca = new Marca();
-                    aux.Marca.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.Marca.Id = (int)datos.Lector["Id"];
+                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
 
                     lista.Add(aux);
                 }

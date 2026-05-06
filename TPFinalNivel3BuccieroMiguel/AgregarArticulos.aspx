@@ -9,18 +9,18 @@
             transition: all 0.3s ease;
         }
 
-        .btn-agregar:hover {
-            background-color: #ff6600 !important;
-            color: #fff !important;
-        }
+            .btn-agregar:hover {
+                background-color: #ff6600 !important;
+                color: #fff !important;
+            }
 
-        .btn-agregar:focus {
-            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
-        }
+            .btn-agregar:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+            }
 
-        .btn-agregar:active {
-            transform: scale(0.98);
-        }
+            .btn-agregar:active {
+                transform: scale(0.98);
+            }
 
         .btn-cancelar {
             margin-top: auto;
@@ -30,18 +30,18 @@
             transition: all 0.3s ease;
         }
 
-        .btn-cancelar:hover {
-            background-color: #ff6600 !important;
-            color: #fff !important;
-        }
+            .btn-cancelar:hover {
+                background-color: #ff6600 !important;
+                color: #fff !important;
+            }
 
-        .btn-cancelar:focus {
-            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
-        }
+            .btn-cancelar:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.4) !important;
+            }
 
-        .btn-cancelar:active {
-            transform: scale(0.98);
-        }
+            .btn-cancelar:active {
+                transform: scale(0.98);
+            }
 
         .form-control:focus {
             border-color: #ff6600 !important;

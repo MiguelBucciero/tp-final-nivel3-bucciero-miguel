@@ -181,5 +181,10 @@ namespace TPFinalNivel3BuccieroMiguel
         {
             pnlFiltros.Visible = !pnlFiltros.Visible;
         }
+
+        protected void btnAgregarMarca_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AgregarMarca.aspx");
+        }
     }
 }

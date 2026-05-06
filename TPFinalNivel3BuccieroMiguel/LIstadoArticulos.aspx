@@ -93,6 +93,7 @@
         <!-- BOTÓN A LA DERECHA -->
         <div class="position-absolute top-50 end-0 translate-middle-y">
             <asp:Button ID="btnAgregar" runat="server" Text="+ Agregar artículo" CssClass="btn btn-agregar" OnClick="btnAgregar_Click" />
+            <asp:Button ID="btnAgregarMarca" Text="+ Agregar Marca" runat="server" CssClass="btn btn-agregar" OnClick="btnAgregarMarca_Click" />
         </div>
     </div>
     <div class="card mb-4 border-0 shadow-sm">

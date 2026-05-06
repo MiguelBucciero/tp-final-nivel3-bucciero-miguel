@@ -31,8 +31,8 @@ namespace TPFinalNivel3BuccieroMiguel
             {
                 ArticuloNegocio articuloNegocio = new ArticuloNegocio();
                 Articulo articulo = new Articulo();
-                articulo.Id = int.Parse((string)Session["idArticulo"]);
-                articulo = articuloNegocio.cargarArticulo(articulo);
+                int id = int.Parse((string)Session["idArticulo"]);
+                articulo = articuloNegocio.cargarArticulo(id);
                 lblNombre.Text = articulo.Nombre;
                 lblDescripcion.Text = articulo.Descripcion;
                 lblPrecio.Text = articulo.Precio.ToString("N2");
