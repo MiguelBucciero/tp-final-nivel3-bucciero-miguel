@@ -399,3 +399,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Cadena de conexion real (no se sube; ver TPFinalNivel3BuccieroMiguel/connectionStrings.example.config)
+TPFinalNivel3BuccieroMiguel/connectionStrings.config
+TPFinalNivel3BuccieroMiguel/connectionStrings.hosting.config

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 using System.Data.SqlClient;
-using System.Net.Configuration;
 
 namespace negocio
 {
@@ -19,7 +19,9 @@ namespace negocio
         }
         public AccesoDatos() 
         {
-            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=CATALOGO_WEB_DB; integrated security=true");
+            // La cadena "CatalogoDB" vive en connectionStrings.config (no se sube a git):
+            // en la PC apunta a SQLEXPRESS y en el hosting a db71080.
+            conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["CatalogoDB"].ConnectionString);
             comando = new SqlCommand();
         }
         public void setearConsulta(string consulta)
