@@ -1,0 +1,3 @@
+# Capturas de revision (se regeneran con npx hyperframes)
+snapshots/
+.hyperframes/
